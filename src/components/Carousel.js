@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 
 export default function Carousel() {
   const images = [
-    "/carousel/banner1.png",
-    "/carousel/banner2.png",
-    "/carousel/banner3.png",
+    "/Carousel/banner1.png",
+    "/Carousel/banner2.png",
+    "/Carousel/banner3.png",
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -32,7 +32,11 @@ export default function Carousel() {
       >
         {images.map((src, index) => (
           <Link to="/Products" key={index} className="min-w-full">
-            <img src={src} alt="精品咖啡豆" className="w-full" />
+            <img
+              src={process.env.PUBLIC_URL + src}
+              alt="精品咖啡豆"
+              className="w-full"
+            />
           </Link>
         ))}
       </div>

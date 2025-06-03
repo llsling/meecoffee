@@ -6,7 +6,7 @@ export default function Main() {
   const images = [
     ["/Main_img/pdCover1.png", "精品咖啡豆", 1],
     ["/Main_img/pdCover2.png", "精選禮盒", 2],
-    ["/Main_img/pdCover3.png", "大師系列｜濾掛", 3],
+    ["/Main_img/pdCover3.png", "濾掛咖啡", 3],
     ["/Main_img/pdCover4.png", "訂購表單", 0],
   ];
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ export default function Main() {
             >
               <div className="relative w-full overflow-hidden rounded-tr-full transform transition duration-700 ease-in-out group-hover:scale-105 group-hover:-translate-y-1">
                 <img
-                  src={item[0]}
+                  src={process.env.PUBLIC_URL + item[0]}
                   alt={item[1]}
                   className="w-full h-auto rounded-tr-full transition duration-700 "
                 />
@@ -96,7 +96,7 @@ export default function Main() {
           <span className="block mt-2 italic">Good Coffee</span>
         </div>
         <img
-          src="/Main_img/store1.png"
+          src={process.env.PUBLIC_URL + "/Main_img/store1.png"}
           className="w-[350px] md:w-auto md:h-[700px]"
         />
       </div>

@@ -36,7 +36,7 @@ export default function MainIntroduction() {
             {text}
           </span>
           <img
-            src={img}
+            src={process.env.PUBLIC_URL + img}
             alt={alt}
             className={`flex-1 min-w-0 w-full h-auto object-cover  ${rounded}`}
           />

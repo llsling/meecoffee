@@ -26,7 +26,11 @@ function Footer() {
             rel="noopener noreferrer"
             className="transition-transform transform hover:scale-110"
           >
-            <img src="/line.svg" alt="Line Icon" className="w-[24px]" />
+            <img
+              src={process.env.PUBLIC_URL + "/line.svg"}
+              alt="Line Icon"
+              className="w-[24px]"
+            />
           </a>
         </div>
       </div>

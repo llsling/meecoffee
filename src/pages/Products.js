@@ -11,7 +11,7 @@ export default function Products() {
   console.log("location.state:", location.state);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/products")
+    fetch("https://meecoffee-backend.onrender.com/api/products")
       .then((res) => res.json())
       .then((data) => {
         console.log("從資料庫取得的商品資料：", data);
@@ -20,7 +20,7 @@ export default function Products() {
       .catch((err) => console.error("載入資料失敗：", err));
   }, []);
   useEffect(() => {
-    fetch("http://localhost:3001/api/kinds")
+    fetch("https://meecoffee-backend.onrender.com/api/kinds")
       .then((res) => res.json())
       .then((data) => {
         setKinds([{ id: 0, name: "全部產品" }, ...data]);
@@ -96,7 +96,7 @@ export default function Products() {
                     <div className="relative">
                       <div className="w-full aspect-square overflow-hidden rounded-md">
                         <img
-                          src={p.img}
+                          src={process.env.PUBLIC_URL + p.img}
                           alt={p.name}
                           className="transform transition-transform duration-500 hover:scale-105 ease-in-out"
                         />

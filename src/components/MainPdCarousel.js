@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 export default function MainPdCarousel() {
   const pdCard = [
     [
-      "/Main_img/pdCard1.png",
+      process.env.PUBLIC_URL + "/Main_img/pdCard1.png",
       "印尼",
       "半水洗",
       "淺中焙",
@@ -10,7 +11,7 @@ export default function MainPdCarousel() {
       "$250",
     ],
     [
-      "/Main_img/pdCard2.png",
+      process.env.PUBLIC_URL + "/Main_img/pdCard2.png",
       "衣索比亞",
       "日曬",
       "淺中焙",
@@ -18,7 +19,7 @@ export default function MainPdCarousel() {
       "$325",
     ],
     [
-      "/Main_img/pdCard3.png",
+      process.env.PUBLIC_URL + "/Main_img/pdCard3.png",
       "瓜地馬拉",
       "水洗",
       "中焙",
@@ -26,7 +27,7 @@ export default function MainPdCarousel() {
       "$190",
     ],
     [
-      "/Main_img/pdCard4.png",
+      process.env.PUBLIC_URL + "/Main_img/pdCard4.png",
       "哥倫比亞",
       "水洗",
       "淺中焙",
@@ -34,7 +35,7 @@ export default function MainPdCarousel() {
       "$315",
     ],
     [
-      "/Main_img/pdCard5.png",
+      process.env.PUBLIC_URL + "/Main_img/pdCard5.png",
       "印尼",
       "半水洗",
       "中深焙",
@@ -42,7 +43,7 @@ export default function MainPdCarousel() {
       "$180",
     ],
     [
-      "/Main_img/pdCard6.png",
+      process.env.PUBLIC_URL + "/Main_img/pdCard6.png",
       "肯亞",
       "水洗",
       "中焙",
@@ -112,7 +113,7 @@ export default function MainPdCarousel() {
       <div className="flex justify-center items-start gap-6 md:gap-8 lg:gap-10">
         {visibleCards.map(([img, country, process, roast, title, price], i) => (
           <div key={i} className="max-w-[200px] h-auto rounded-md">
-            <a href="/Products">
+            <Link to="/Products">
               <div className="relative">
                 <div className="w-full aspect-square overflow-hidden rounded-md">
                   <img
@@ -138,7 +139,7 @@ export default function MainPdCarousel() {
                   {price}
                 </span>
               </div>
-            </a>
+            </Link>
           </div>
         ))}
       </div>

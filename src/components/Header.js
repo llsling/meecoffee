@@ -34,7 +34,7 @@ export default function Header() {
         } lg:justify-center`}
       >
         <Link to="/" className="max-w-20 lg:max-w-24 lg:mr-16">
-          <img src="/logo.png" alt="小美咖啡" />
+          <img src={process.env.PUBLIC_URL + "/logo.png"} alt="小美咖啡" />
         </Link>
         <nav aria-label="主導覽列" className="hidden lg:block">
           <ul className="flex justify-center space-x-16 text-xl text-gray-700">
@@ -63,14 +63,22 @@ export default function Header() {
             aria-label="會員中心"
             className="hover:brightness-150 transition duration-300"
           >
-            <img src="/user-icon.png" alt="會員中心" className="w-6 h-6" />
+            <img
+              src={process.env.PUBLIC_URL + "/user-icon.png"}
+              alt="會員中心"
+              className="w-6 h-6"
+            />
           </a>
           <a
             href="/cart"
             aria-label="購物車"
             className="flex items-end hover:brightness-150 transition duration-300"
           >
-            <img src="/cart-icon.png" alt="購物車" className="w-6 h-6" />
+            <img
+              src={process.env.PUBLIC_URL + "/cart-icon.png"}
+              alt="購物車"
+              className="w-6 h-6"
+            />
             <span className="text-sm ml-0.5 relative top-[2px]">0</span>
           </a>
           <button
@@ -78,7 +86,11 @@ export default function Header() {
             aria-label="搜尋"
             className="hover:brightness-150 transition duration-300"
           >
-            <img src="/search-icon.png" alt="搜尋" className="w-6 h-6" />
+            <img
+              src={process.env.PUBLIC_URL + "/search-icon.png"}
+              alt="搜尋"
+              className="w-6 h-6"
+            />
           </button>
         </div>
       </div>
