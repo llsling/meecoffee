@@ -27,11 +27,13 @@ export default function Products() {
       });
   }, []);
 
-  const [selectedKindId, setSelectedKindId] = useState(0);
+  const [selectedKindId, setSelectedKindId] = useState(undefined);
   useEffect(() => {
-    const kindId = Number(searchParams.get("kindId")) || 0;
-    setSelectedKindId(kindId);
-  }, [searchParams]);
+    if (kinds.length > 0) {
+      const kindIdFromParams = Number(searchParams.get("kindId")) || 0;
+      setSelectedKindId(kindIdFromParams);
+    }
+  }, [searchParams, kinds]);
 
   const filteredProducts =
     selectedKindId === 0
@@ -54,7 +56,11 @@ export default function Products() {
         <div className="max-w-screen-lg italic mx-auto flex items-center gap-1">
           <Link to="/">首頁</Link>
           <span className="mx-0.5 text-gray-400">/</span>
-          <span>{kinds.find((k) => k.id === selectedKindId)?.name}</span>
+          <span>
+            {kinds.length === 0
+              ? "載入中..."
+              : kinds.find((k) => k.id === selectedKindId)?.name}
+          </span>
         </div>
       </div>
       <div className="max-w-screen-lg flex flex-col sm:flex-row justfity-center items-start gap-6 mx-auto px-4 py-8">
