@@ -30,10 +30,15 @@ export default function Products() {
   const [selectedKindId, setSelectedKindId] = useState(undefined);
   useEffect(() => {
     if (kinds.length > 0) {
-      const kindIdFromParams = Number(searchParams.get("kindId")) || 0;
-      setSelectedKindId(kindIdFromParams);
+      const kindId = Number(searchParams.get("kindId")) || 0;
+      setSelectedKindId(kindId);
     }
   }, [searchParams, kinds]);
+  useEffect(() => {
+    if (!searchParams.has("kindId")) {
+      navigate("/Products?kindId=0", { replace: true });
+    }
+  }, [searchParams, navigate]);
 
   const filteredProducts =
     selectedKindId === 0
@@ -59,7 +64,7 @@ export default function Products() {
           <span>
             {kinds.length === 0
               ? "載入中..."
-              : kinds.find((k) => k.id === selectedKindId)?.name}
+              : kinds.find((k) => k.id === selectedKindId)?.name || "全部產品"}
           </span>
         </div>
       </div>
@@ -84,7 +89,9 @@ export default function Products() {
         </div>
         <div className="flex flex-col items-start w-full gap-6">
           <h2 className="text-xl font-bold text-gray-800 ml-6">
-            {kinds.find((k) => k.id === selectedKindId)?.name}
+            {kinds.length === 0
+              ? "載入中..."
+              : kinds.find((k) => k.id === selectedKindId)?.name || "全部產品"}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-9 w-full">
             {filteredProducts.map((p) => {
