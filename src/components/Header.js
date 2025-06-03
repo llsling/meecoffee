@@ -5,9 +5,9 @@ import throttle from "lodash/throttle";
 export default function Header() {
   const listName = [
     ["最新消息", "/"],
-    ["精品咖啡豆", "/Products"],
-    ["精選禮盒", "/Products"],
-    ["即期優惠", "/Products"],
+    ["精品咖啡豆", "/Products", 1],
+    ["精選禮盒", "/Products", 2],
+    ["即期優惠", "/Products", 0],
     ["關於我們", "/"],
   ];
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,15 +40,17 @@ export default function Header() {
           <ul className="flex justify-center space-x-16 text-xl text-gray-700">
             {listName.map((item, index) => (
               <li key={index} className="relative">
-                <Link
-                  to={item[1]}
+                <div
+                  onClick={() =>
+                    navigate("/Products", { state: { kindId: item[2] } })
+                  }
                   className={`cursor-pointer transition-colors duration-300 hover:text-black inline-block
                    after:content-[''] after:absolute after:left-0 after:bottom-0
                    after:h-[2px] after:w-0 hover:after:w-full after:bg-black
                    after:transition-all after:duration-300`}
                 >
                   {item[0]}
-                </Link>
+                </div>
               </li>
             ))}
           </ul>
