@@ -10,6 +10,10 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const [kinds, setKinds] = useState([]);
   const navigate = useNavigate();
+
+  console.log("selectedKindId", selectedKindId);
+  console.log("kinds", kinds);
+
   useEffect(() => {
     fetch("https://meecoffee-backend.onrender.com/api/products")
       .then((res) => res.json())
