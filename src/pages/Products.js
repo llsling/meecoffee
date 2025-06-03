@@ -61,6 +61,8 @@ export default function Products() {
 
   return (
     <div className="w-full bg-[#f9f9f9] pb-72">
+      <p>{JSON.stringify(kinds)}</p>
+
       <div className="w-full px-5 py-2 bg-gray-200 text-sm">
         <div className="max-w-screen-lg italic mx-auto flex items-center gap-1">
           <Link to="/">首頁</Link>
