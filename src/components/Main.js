@@ -28,7 +28,13 @@ export default function Main() {
           {images.map((item, index) => (
             <div
               key={index}
-              onClick={() => navigate(`/Products?kindId=${item[2]}`)}
+              onClick={() => {
+                if (typeof item[2] === "number") {
+                  navigate(`/products?kindId=${item[2]}`);
+                } else {
+                  console.warn("無效的 kindId：", item[2]);
+                }
+              }}
               className="group block"
             >
               <div className="relative w-full overflow-hidden rounded-tr-full transform transition duration-700 ease-in-out group-hover:scale-105 group-hover:-translate-y-1">

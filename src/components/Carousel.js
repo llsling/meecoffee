@@ -31,7 +31,7 @@ export default function Carousel() {
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {images.map((src, index) => (
-          <Link to="/Products" key={index} className="min-w-full">
+          <Link to="/products" key={index} className="min-w-full">
             <img
               src={process.env.PUBLIC_URL + src}
               alt="精品咖啡豆"

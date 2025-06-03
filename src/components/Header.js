@@ -6,9 +6,9 @@ import throttle from "lodash/throttle";
 export default function Header() {
   const listName = [
     ["最新消息", "/"],
-    ["精品咖啡豆", "/Products", 1],
-    ["精選禮盒", "/Products", 2],
-    ["即期優惠", "/Products", 0],
+    ["精品咖啡豆", "/products", 1],
+    ["精選禮盒", "/products", 2],
+    ["即期優惠", "/products", 0],
     ["關於我們", "/"],
   ];
   const navigate = useNavigate();
@@ -44,8 +44,8 @@ export default function Header() {
               <li key={index} className="relative">
                 <div
                   onClick={() => {
-                    if (item[1] === "/Products") {
-                      navigate(`/Products?kindId=${item[2]}`);
+                    if (item[1] === "/products") {
+                      navigate(`/products?kindId=${item[2]}`);
                     } else {
                       navigate(item[1]);
                     }

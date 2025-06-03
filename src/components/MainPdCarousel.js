@@ -113,7 +113,7 @@ export default function MainPdCarousel() {
       <div className="flex justify-center items-start gap-6 md:gap-8 lg:gap-10">
         {visibleCards.map(([img, country, process, roast, title, price], i) => (
           <div key={i} className="max-w-[200px] h-auto rounded-md">
-            <Link to="/Products">
+            <Link to="/products">
               <div className="relative">
                 <div className="w-full aspect-square overflow-hidden rounded-md">
                   <img

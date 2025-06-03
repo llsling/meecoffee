@@ -1,18 +1,20 @@
+import { useMemo } from "react";
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ProductModal from "../components/ProductModal";
 
 export default function Products() {
-  const [searchParams] = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [kinds, setKinds] = useState([]);
   const navigate = useNavigate();
-
-  console.log("selectedKindId", selectedKindId);
-  console.log("kinds", kinds);
+  const [searchParams] = useSearchParams();
+  const selectedKindId = Number(searchParams.get("kindId")) || 0;
+  const selectedKind = useMemo(() => {
+    return kinds.find((k) => k.id === selectedKindId);
+  }, [kinds, selectedKindId]);
 
   useEffect(() => {
     fetch("https://meecoffee-backend.onrender.com/api/products")
@@ -27,20 +29,14 @@ export default function Products() {
     fetch("https://meecoffee-backend.onrender.com/api/kinds")
       .then((res) => res.json())
       .then((data) => {
+        console.log("取得 kinds 資料：", data);
         setKinds([{ id: 0, name: "全部產品" }, ...data]);
       });
   }, []);
 
-  const [selectedKindId, setSelectedKindId] = useState(undefined);
-  useEffect(() => {
-    if (kinds.length > 0) {
-      const kindId = Number(searchParams.get("kindId")) || 0;
-      setSelectedKindId(kindId);
-    }
-  }, [searchParams, kinds]);
   useEffect(() => {
     if (!searchParams.has("kindId")) {
-      navigate("/Products?kindId=0", { replace: true });
+      navigate("/products?kindId=0", { replace: true });
     }
   }, [searchParams, navigate]);
 
@@ -61,8 +57,6 @@ export default function Products() {
 
   return (
     <div className="w-full bg-[#f9f9f9] pb-72">
-      <p>{JSON.stringify(kinds)}</p>
-
       <div className="w-full px-5 py-2 bg-gray-200 text-sm">
         <div className="max-w-screen-lg italic mx-auto flex items-center gap-1">
           <Link to="/">首頁</Link>
@@ -70,7 +64,7 @@ export default function Products() {
           <span>
             {kinds.length === 0
               ? "載入中..."
-              : kinds.find((k) => k.id === selectedKindId)?.name || "全部產品"}
+              : selectedKind?.name || "全部產品"}
           </span>
         </div>
       </div>
@@ -84,7 +78,9 @@ export default function Products() {
               return (
                 <li
                   key={k.id}
-                  onClick={() => navigate(`/Products?kindId=${k.id}`)}
+                  onClick={() => {
+                    navigate(`/products?kindId=${k.id}`);
+                  }}
                   className="transition-all hover:text-[#0d1b2a] hover:translate-x-1"
                 >
                   {k.name}
@@ -97,7 +93,7 @@ export default function Products() {
           <h2 className="text-xl font-bold text-gray-800 ml-6">
             {kinds.length === 0
               ? "載入中..."
-              : kinds.find((k) => k.id === selectedKindId)?.name || "全部產品"}
+              : selectedKind?.name || "全部產品"}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-9 w-full">
             {filteredProducts.map((p) => {
