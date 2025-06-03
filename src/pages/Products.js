@@ -66,10 +66,7 @@ export default function Products() {
               return (
                 <li
                   key={k.id}
-                  onClick={() => {
-                    setSelectedKindId(k.id);
-                    window.history.replaceState({}, document.title);
-                  }}
+                  onClick={() => navigate(`/Products?kindId=${k.id}`)}
                   className="transition-all hover:text-[#0d1b2a] hover:translate-x-1"
                 >
                   {k.name}
