@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProductModal from "../components/ProductModal";
 
 export default function Products() {
@@ -8,7 +9,7 @@ export default function Products() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [kinds, setKinds] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetch("https://meecoffee-backend.onrender.com/api/products")
       .then((res) => res.json())
