@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import throttle from "lodash/throttle";
 
 export default function Header() {
@@ -10,6 +11,7 @@ export default function Header() {
     ["即期優惠", "/Products", 0],
     ["關於我們", "/"],
   ];
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = throttle(() => {
