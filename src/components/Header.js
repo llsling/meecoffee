@@ -45,7 +45,7 @@ export default function Header() {
                 <div
                   onClick={() => {
                     if (item[1] === "/Products") {
-                      navigate("/Products", { state: { kindId: item[2] } });
+                      navigate(`/Products?kindId=${item[2]}`);
                     } else {
                       navigate(item[1]);
                     }

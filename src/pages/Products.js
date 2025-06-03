@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import ProductModal from "../components/ProductModal";
 
 export default function Products() {
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [kinds, setKinds] = useState([]);
-  console.log("location.state:", location.state);
 
   useEffect(() => {
     fetch("https://meecoffee-backend.onrender.com/api/products")
@@ -28,12 +27,10 @@ export default function Products() {
   }, []);
 
   const [selectedKindId, setSelectedKindId] = useState(0);
-  //檢查是不是從首頁點入
   useEffect(() => {
-    if (location.state?.kindId) {
-      setSelectedKindId(location.state.kindId);
-    }
-  }, [location.state]);
+    const kindId = Number(searchParams.get("kindId")) || 0;
+    setSelectedKindId(kindId);
+  }, [searchParams]);
 
   const filteredProducts =
     selectedKindId === 0
