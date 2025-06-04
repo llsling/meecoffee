@@ -5,11 +5,11 @@ import throttle from "lodash/throttle";
 
 export default function Header() {
   const listName = [
-    ["最新消息", "/"],
+    ["最新消息", "/news"],
     ["精品咖啡豆", "/products", 1],
     ["精選禮盒", "/products", 2],
     ["即期優惠", "/products", 0],
-    ["關於我們", "/"],
+    ["關於我們", "/About"],
   ];
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);

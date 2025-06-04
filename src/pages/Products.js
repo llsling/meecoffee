@@ -92,7 +92,7 @@ export default function Products() {
         <div className="flex flex-col items-start w-full gap-6">
           <h2 className="text-xl font-bold text-gray-800 ml-6">
             {kinds.length === 0
-              ? "載入中..."
+              ? "載入中...資料載入速度不快，請稍等"
               : selectedKind?.name || "全部產品"}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-9 w-full">

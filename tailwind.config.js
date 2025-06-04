@@ -6,6 +6,7 @@ module.exports = {
       animation: {
         "flow-left-to-right": "flowLeftToRight 4s linear infinite",
         "flow-right-to-left": "flowRightToLeft 4s linear infinite",
+        textflow: "textflow 4s ease infinite",
       },
       keyframes: {
         flowLeftToRight: {
@@ -15,6 +16,10 @@ module.exports = {
         flowRightToLeft: {
           "0%": { backgroundPosition: "200% 0%" },
           "100%": { backgroundPosition: "0% 0%" },
+        },
+        textflow: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
         },
       },
     },
