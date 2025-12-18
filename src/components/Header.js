@@ -81,8 +81,8 @@ export default function Header() {
               className="w-6 h-6"
             />
           </a>
-          <a
-            href="/cart"
+          <Link
+            to="/cart"
             aria-label="購物車"
             className="flex items-end hover:brightness-150 transition duration-300"
           >
@@ -96,7 +96,7 @@ export default function Header() {
                 {totalQty}
               </span>
             )}
-          </a>
+          </Link>
           <button
             type="button"
             aria-label="搜尋"

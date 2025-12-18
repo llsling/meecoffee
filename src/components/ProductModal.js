@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { CartContext } from "../components/CartContext";
 
 export default function ProductModal({ isOpen, onClose, p }) {
+  const { addToCart } = useContext(CartContext);
   const [qty, setQty] = useState(1);
   useEffect(() => {
     if (isOpen) setQty(1);
@@ -10,23 +13,6 @@ export default function ProductModal({ isOpen, onClose, p }) {
 
   const increment = () => setQty((q) => q + 1);
   const decrement = () => setQty((q) => (q > 1 ? q - 1 : 1));
-
-  const addToCart = () => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existingItem = cart.find((item) => item.id === p.id);
-    if (existingItem) {
-      existingItem.quantity += qty;
-    } else {
-      cart.push({
-        id: p.id,
-        name: p.name,
-        price: p.price,
-        img: p.img,
-        quantity: qty,
-      });
-    }
-    localStorage.setItem("cart", JSON.stringify(cart));
-  };
 
   return (
     <div className="fixed inset-0 bg-black/30 z-50 flex justify-center items-center">
@@ -66,7 +52,7 @@ export default function ProductModal({ isOpen, onClose, p }) {
             </div>
             <button
               className="add-cart-btn bg-yellow-500 text-white px-8 py-2 ml-10 rounded hover:bg-yellow-600 transition"
-              onClick={addToCart}
+              onClick={() => addToCart(p, qty)}
             >
               加入購物車
             </button>
