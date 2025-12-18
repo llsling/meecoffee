@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { CartProvider } from "./components/CartContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -20,6 +20,7 @@ export default function App() {
           <Route path="/news" element={<News />} />
           <Route path="/about" element={<About />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<Home />} /> {/*出現錯誤回首頁 */}
         </Routes>
         <Footer />
       </div>

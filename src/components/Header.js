@@ -13,7 +13,7 @@ export default function Header() {
     ["精品咖啡豆", "/products", 1],
     ["精選禮盒", "/products", 2],
     ["即期優惠", "/products", 0],
-    ["關於我們", "/About"],
+    ["關於我們", "/about"],
   ];
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -81,7 +81,23 @@ export default function Header() {
               className="w-6 h-6"
             />
           </Link>
-          <div
+          <Link
+            to="/cart"
+            aria-label="購物車"
+            className="flex items-end hover:brightness-150 transition duration-300 cursor-pointer"
+          >
+            <img
+              src={process.env.PUBLIC_URL + "/cart-icon.png"}
+              alt="購物車"
+              className="w-6 h-6"
+            />
+            {totalQty > 0 && (
+              <span className="text-sm ml-0.5 relative top-[2px]">
+                {totalQty}
+              </span>
+            )}
+          </Link>
+          {/* <div
             onClick={() => navigate("/cart")}
             aria-label="購物車"
             className="flex items-end hover:brightness-150 transition duration-300 cursor-pointer"
@@ -96,7 +112,7 @@ export default function Header() {
                 {totalQty}
               </span>
             )}
-          </div>
+          </div> */}
           <button
             type="button"
             aria-label="搜尋"
