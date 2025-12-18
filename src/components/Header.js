@@ -70,8 +70,8 @@ export default function Header() {
             isScrolled ? "bottom-3 lg:bottom-5" : "bottom-4 lg:bottom-8"
           }`}
         >
-          <a
-            href="/login"
+          <Link
+            to="/login"
             aria-label="會員中心"
             className="hover:brightness-150 transition duration-300"
           >
@@ -80,11 +80,11 @@ export default function Header() {
               alt="會員中心"
               className="w-6 h-6"
             />
-          </a>
-          <Link
-            to="/cart"
+          </Link>
+          <div
+            onClick={() => navigate("/cart")}
             aria-label="購物車"
-            className="flex items-end hover:brightness-150 transition duration-300"
+            className="flex items-end hover:brightness-150 transition duration-300 cursor-pointer"
           >
             <img
               src={process.env.PUBLIC_URL + "/cart-icon.png"}
@@ -96,7 +96,7 @@ export default function Header() {
                 {totalQty}
               </span>
             )}
-          </Link>
+          </div>
           <button
             type="button"
             aria-label="搜尋"
