@@ -1,18 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { CartContext } from "../components/CartContext";
 
 function Cart() {
-  const [cart, setCart] = useState([]);
+  const { cart, removeFromCart, increaseQty, decreaseQty } =
+    useContext(CartContext);
 
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("cart")) || [];
-    setCart(data);
-  }, []);
-
-  const removeItem = (id) => {
-    const newCart = cart.filter((item) => item.id !== id);
-    setCart(newCart);
-    localStorage.setItem("cart", JSON.stringify(newCart));
-  };
+  const navigate = useNavigate();
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -23,16 +17,47 @@ function Cart() {
       {cart.length === 0 && <p>購物車是空的</p>}
 
       {cart.map((item) => (
-        <div key={item.id} style={{ marginBottom: 16 }}>
+        <div
+          key={item.id}
+          style={{
+            marginBottom: 16,
+            borderBottom: "1px solid #ddd",
+            paddingBottom: 12,
+          }}
+        >
           <h3>{item.name}</h3>
           <p>單價：${item.price}</p>
-          <p>數量：{item.quantity}</p>
+
+          {/* 數量控制 */}
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <button onClick={() => decreaseQty(item.id)}>-</button>
+            <span>{item.quantity}</span>
+            <button onClick={() => increaseQty(item.id)}>+</button>
+          </div>
+
           <p>小計：${item.price * item.quantity}</p>
-          <button onClick={() => removeItem(item.id)}>刪除</button>
+
+          <button
+            onClick={() => removeFromCart(item.id)}
+            style={{ marginTop: 8 }}
+          >
+            刪除
+          </button>
         </div>
       ))}
 
-      {cart.length > 0 && <h2>總金額：${total}</h2>}
+      {/* 總金額 + 結帳 */}
+      {cart.length > 0 && (
+        <div className="flex justify-between items-center mt-6 pt-4 border-t-2 border-gray-200">
+          <h2>總金額：${total}</h2>
+          <button
+            onClick={() => navigate("/checkout")}
+            className="bg-yellow-400 text-black px-6 py-3 rounded-md font-bold cursor-pointer"
+          >
+            前往結帳
+          </button>
+        </div>
+      )}
     </div>
   );
 }

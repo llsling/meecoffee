@@ -6,7 +6,9 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import News from "./pages/News";
 import About from "./pages/About";
-import Cart from "./pages/Cart";
+import Cart from "./pages/Cart"; //購物車
+import Checkout from "./pages/Checkout"; //結帳頁
+import CheckoutSuccess from "./pages/CheckoutSuccess";
 import "./App.css";
 
 export default function App() {
@@ -20,6 +22,8 @@ export default function App() {
           <Route path="/news" element={<News />} />
           <Route path="/about" element={<About />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout-success" element={<CheckoutSuccess />} />
           <Route path="*" element={<Home />} /> {/*出現錯誤回首頁 */}
         </Routes>
         <Footer />

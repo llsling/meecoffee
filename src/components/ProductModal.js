@@ -1,18 +1,32 @@
-import { useEffect, useState } from "react";
-import { useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { CartContext } from "../components/CartContext";
 
 export default function ProductModal({ isOpen, onClose, p }) {
   const { addToCart } = useContext(CartContext);
   const [qty, setQty] = useState(1);
+  const [added, setAdded] = useState(false);
+
   useEffect(() => {
-    if (isOpen) setQty(1);
+    if (isOpen) {
+      setQty(1);
+      setAdded(false);
+    }
   }, [isOpen]);
 
   if (!isOpen) return null;
 
   const increment = () => setQty((q) => q + 1);
   const decrement = () => setQty((q) => (q > 1 ? q - 1 : 1));
+
+  const handleAddToCart = () => {
+    addToCart(p, qty);
+    setAdded(true);
+
+    // 1 秒後自動關閉加入購物車的頁面
+    setTimeout(() => {
+      onClose();
+    }, 1000);
+  };
 
   return (
     <div className="fixed inset-0 bg-black/30 z-50 flex justify-center items-center">
@@ -30,15 +44,20 @@ export default function ProductModal({ isOpen, onClose, p }) {
             alt={p.name}
             className="w-48 h-48 object-contain"
           />
+
           <h2 className="text-lg font-semibold mt-4">{p.name}</h2>
-          <p className="text-gray-700 font-bold text-2xl mb-4 ">
+
+          <p className="text-gray-700 font-bold text-2xl mb-4">
             NT${parseFloat(p.price).toFixed(0)}
           </p>
+
+          {/* 數量控制 */}
           <div className="w-full flex items-center justify-end mt-1">
             <div className="flex gap-8">
               <button
                 onClick={decrement}
                 className="w-8 h-8 border rounded text-lg font-bold hover:bg-gray-100"
+                disabled={added}
               >
                 -
               </button>
@@ -46,15 +65,23 @@ export default function ProductModal({ isOpen, onClose, p }) {
               <button
                 onClick={increment}
                 className="w-8 h-8 border rounded text-lg font-bold hover:bg-gray-100"
+                disabled={added}
               >
                 +
               </button>
             </div>
+
             <button
-              className="add-cart-btn bg-yellow-500 text-white px-8 py-2 ml-10 rounded hover:bg-yellow-600 transition"
-              onClick={() => addToCart(p, qty)}
+              className={`px-8 py-2 ml-10 rounded transition
+                ${
+                  added
+                    ? "bg-green-500 text-white cursor-default"
+                    : "bg-yellow-500 text-white hover:bg-yellow-600"
+                }`}
+              onClick={handleAddToCart}
+              disabled={added}
             >
-              加入購物車
+              {added ? "已加入購物車 ✓" : "加入購物車"}
             </button>
           </div>
         </div>
