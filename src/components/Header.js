@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "../components/CartContext";
 import throttle from "lodash/throttle";
 
 export default function Header() {
+  const { cart } = useContext(CartContext);
+  const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   const listName = [
     ["最新消息", "/news"],
     ["精品咖啡豆", "/products", 1],
@@ -87,7 +91,11 @@ export default function Header() {
               alt="購物車"
               className="w-6 h-6"
             />
-            <span className="text-sm ml-0.5 relative top-[2px]">0</span>
+            {totalQty > 0 && (
+              <span className="text-sm ml-0.5 relative top-[2px]">
+                {totalQty}
+              </span>
+            )}
           </a>
           <button
             type="button"

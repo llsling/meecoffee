@@ -18,19 +18,49 @@ export default function Products() {
 
   useEffect(() => {
     fetch("https://meecoffee-backend.onrender.com/api/products")
+      // fetch("http://localhost:3001/api/products")
       .then((res) => res.json())
       .then((data) => {
-        console.log("從資料庫取得的商品資料：", data);
-        setProducts(data);
+        console.log("products API 回傳：", data);
+
+        if (Array.isArray(data)) {
+          setProducts(data);
+        } else if (Array.isArray(data.products)) {
+          setProducts(data.products);
+        } else if (Array.isArray(data.data)) {
+          setProducts(data.data);
+        } else {
+          console.error("products 格式錯誤", data);
+          setProducts([]);
+        }
       })
-      .catch((err) => console.error("載入資料失敗：", err));
+      .catch((err) => {
+        console.error("載入 products 失敗：", err);
+        setProducts([]);
+      });
   }, []);
+
   useEffect(() => {
     fetch("https://meecoffee-backend.onrender.com/api/kinds")
+      // fetch("http://localhost:3001/api/kinds")
       .then((res) => res.json())
       .then((data) => {
-        console.log("取得 kinds 資料：", data);
-        setKinds([{ id: 0, name: "全部產品" }, ...data]);
+        console.log("kinds API 回傳：", data);
+
+        if (Array.isArray(data)) {
+          setKinds([{ id: 0, name: "全部產品" }, ...data]);
+        } else if (Array.isArray(data.kinds)) {
+          setKinds([{ id: 0, name: "全部產品" }, ...data.kinds]);
+        } else if (Array.isArray(data.data)) {
+          setKinds([{ id: 0, name: "全部產品" }, ...data.data]);
+        } else {
+          console.error("kinds 格式錯誤", data);
+          setKinds([{ id: 0, name: "全部產品" }]);
+        }
+      })
+      .catch((err) => {
+        console.error("載入 kinds 失敗", err);
+        setKinds([{ id: 0, name: "全部產品" }]);
       });
   }, []);
 
@@ -40,10 +70,11 @@ export default function Products() {
     }
   }, [searchParams, navigate]);
 
-  const filteredProducts =
-    selectedKindId === 0
+  const filteredProducts = Array.isArray(products)
+    ? selectedKindId === 0
       ? products
-      : products.filter((p) => p.kind_id === selectedKindId);
+      : products.filter((p) => p.kind_id === selectedKindId)
+    : [];
 
   // 打開 modal 的函式，例如點選商品時
   const handleOpenModal = (product) => {

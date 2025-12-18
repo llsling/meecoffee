@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ProductModal({ isOpen, onClose, p }) {
   const [qty, setQty] = useState(1);
@@ -11,6 +11,23 @@ export default function ProductModal({ isOpen, onClose, p }) {
   const increment = () => setQty((q) => q + 1);
   const decrement = () => setQty((q) => (q > 1 ? q - 1 : 1));
 
+  const addToCart = () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existingItem = cart.find((item) => item.id === p.id);
+    if (existingItem) {
+      existingItem.quantity += qty;
+    } else {
+      cart.push({
+        id: p.id,
+        name: p.name,
+        price: p.price,
+        img: p.img,
+        quantity: qty,
+      });
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
+
   return (
     <div className="fixed inset-0 bg-black/30 z-50 flex justify-center items-center">
       <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-8 relative">
@@ -22,7 +39,11 @@ export default function ProductModal({ isOpen, onClose, p }) {
         </button>
 
         <div className="flex flex-col items-center text-start">
-          <img src={p.img} alt={p.name} className="w-48 h-48 object-contain" />
+          <img
+            src={process.env.PUBLIC_URL + p.img}
+            alt={p.name}
+            className="w-48 h-48 object-contain"
+          />
           <h2 className="text-lg font-semibold mt-4">{p.name}</h2>
           <p className="text-gray-700 font-bold text-2xl mb-4 ">
             NT${parseFloat(p.price).toFixed(0)}
@@ -43,7 +64,10 @@ export default function ProductModal({ isOpen, onClose, p }) {
                 +
               </button>
             </div>
-            <button className="bg-yellow-500 text-white px-8 py-2 ml-10 rounded hover:bg-yellow-600 transition">
+            <button
+              className="add-cart-btn bg-yellow-500 text-white px-8 py-2 ml-10 rounded hover:bg-yellow-600 transition"
+              onClick={addToCart}
+            >
               加入購物車
             </button>
           </div>
