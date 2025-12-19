@@ -64,15 +64,17 @@ export default function MainPdCarousel() {
         setCardShow(2);
       }
     };
-    updateCardsToShow();
+    updateCardsToShow(); //載入時先執行一次
     window.addEventListener("resize", updateCardsToShow);
     return () => window.removeEventListener("resize", updateCardsToShow);
   }, []);
   const visibleCards = pdCard.slice(startIndex, startIndex + cardShow);
   const scrollLeft = () => {
+    //如果已經在最左邊，就跳到最後一組；否則索引 -1
     setStartIndex((prev) => (prev === 0 ? pdCard.length - cardShow : prev - 1));
   };
   const scrollRight = () => {
+    //如果已經在最右邊，就回到 0；否則索引 +1
     setStartIndex((prev) => (prev >= pdCard.length - cardShow ? 0 : prev + 1));
   };
   const handleLeftHoverStart = () => {

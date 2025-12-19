@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function CheckoutSuccess() {
   const navigate = useNavigate();
-
   return (
     <div className="min-h-[70vh] flex justify-center items-center">
       <div className="text-center max-w-[500px]">

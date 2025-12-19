@@ -1,13 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; //頁面跳轉不刷新
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { CartContext } from "../components/CartContext";
-import throttle from "lodash/throttle";
+import { CartContext } from "../components/CartContext"; //匯入購物車的共享狀態上下文
+import throttle from "lodash/throttle"; //匯入節流函數，限制滾動事件觸發頻率以提高效能
 
 export default function Header() {
-  const { cart } = useContext(CartContext);
-  const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
-
+  const { totalQty } = useContext(CartContext); //拿CartContext的值
+  //定義導航欄列表
   const listName = [
     ["最新消息", "/news"],
     ["精品咖啡豆", "/products", 1],
@@ -15,14 +14,16 @@ export default function Header() {
     ["即期優惠", "/products", 0],
     ["關於我們", "/about"],
   ];
-  const navigate = useNavigate();
-  const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate(); //宣告導航工具
+  const [isScrolled, setIsScrolled] = useState(false); //滾動是否超過450px
   useEffect(() => {
+    //使用 throttle 限制每 100ms 才執行一次判斷，避免滾動時過度消耗效能
     const handleScroll = throttle(() => {
       setIsScrolled(window.scrollY > 450);
     }, 100);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); //初始化時先執行一次判斷
+    window.addEventListener("scroll", handleScroll, { passive: true }); //開始監聽, passive: true直接滾不卡/不會呼叫 preventDefault()
+    //清除函式：組件卸載時移除監聽器，避免記憶體洩漏
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -92,27 +93,11 @@ export default function Header() {
               className="w-6 h-6"
             />
             {totalQty > 0 && (
-              <span className="text-sm ml-0.5 relative top-[2px]">
+              <span className="relative text-sm ml-0.5 top-[2px]">
                 {totalQty}
               </span>
             )}
           </Link>
-          {/* <div
-            onClick={() => navigate("/cart")}
-            aria-label="購物車"
-            className="flex items-end hover:brightness-150 transition duration-300 cursor-pointer"
-          >
-            <img
-              src={process.env.PUBLIC_URL + "/cart-icon.png"}
-              alt="購物車"
-              className="w-6 h-6"
-            />
-            {totalQty > 0 && (
-              <span className="text-sm ml-0.5 relative top-[2px]">
-                {totalQty}
-              </span>
-            )}
-          </div> */}
           <button
             type="button"
             aria-label="搜尋"
