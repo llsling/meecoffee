@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function LoginRegister() {
   const [isRegister, setIsRegister] = useState(false);
@@ -6,6 +6,7 @@ export default function LoginRegister() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [userPhone, setUserPhone] = useState(null); //手機號碼
 
   const handleSubmit = async () => {
     // 註冊時檢查確認密碼
@@ -14,6 +15,8 @@ export default function LoginRegister() {
       return;
     }
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    console.log("API_BASE_URL =", API_BASE_URL);
+
     const url = isRegister
       ? `${API_BASE_URL}/api/auth/register`
       : `${API_BASE_URL}/api/auth/login`;
@@ -28,21 +31,61 @@ export default function LoginRegister() {
           password,
         }),
       });
+      console.log("login response status =", res.status);
       const data = await res.json();
       if (!res.ok) {
         alert(data.message || "操作失敗");
         return;
       }
-      // 登入 / 註冊成功
-      console.log("成功", data);
       // 存 token
       localStorage.setItem("token", data.token);
-      alert(isRegister ? "註冊成功" : "登入成功");
+      const meRes = await fetch(`${API_BASE_URL}/api/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${data.token}`,
+        },
+      });
+
+      if (!meRes.ok) {
+        alert("取得使用者資訊失敗");
+        return;
+      }
+      const meData = await meRes.json();
+      setUserPhone(meData.phone);
     } catch (err) {
       console.error(err);
       alert("系統錯誤");
     }
   };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+    fetch(`${API_BASE_URL}/api/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("not login");
+        return res.json();
+      })
+      .then((data) => {
+        setUserPhone(data.phone);
+      })
+      .catch(() => {
+        localStorage.removeItem("token");
+      });
+  }, []);
+  //登入成功後，只顯示歡迎畫面
+  if (userPhone) {
+    return (
+      <div className="max-w-sm mx-auto mt-20 mb-20 p-6 bg-white shadow rounded text-center">
+        <h2 className="text-2xl font-bold">歡迎～{userPhone}</h2>
+      </div>
+    );
+  }
   return (
     <div className="max-w-sm mx-auto mt-20 p-6 mb-12 bg-white shadow rounded">
       <h2 className="text-2xl font-bold text-center mb-6">
