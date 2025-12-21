@@ -98,7 +98,7 @@ export default function Header() {
               </span>
             )}
           </Link>
-          <button
+          {/* <button
             type="button"
             aria-label="搜尋"
             className="hover:brightness-150 transition duration-300"
@@ -108,7 +108,7 @@ export default function Header() {
               alt="搜尋"
               className="w-6 h-6"
             />
-          </button>
+          </button> */}
         </div>
       </div>
     </header>
