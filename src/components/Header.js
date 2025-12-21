@@ -72,7 +72,7 @@ export default function Header() {
           }`}
         >
           <Link
-            to="/login"
+            to="/LoginRegister"
             aria-label="會員中心"
             className="hover:brightness-150 transition duration-300"
           >
